@@ -56,6 +56,6 @@ class Level(models.Model):
 
 
 class Image(models.Model):
-    data = models.ImageField()
+    data = models.ImageField(upload_to='media/')
     title = models.CharField(max_length=64)
     pereval_id = models.ForeignKey(Pereval, on_delete=models.CASCADE)
