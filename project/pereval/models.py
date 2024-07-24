@@ -17,10 +17,10 @@ class Pereval(models.Model):
         (rejected, 'отклонено'),
     ]
 
-    beauty_title = models.CharField(max_length=32, default='пер. ', blank=True)
-    title = models.CharField(max_length=32, null=True, blank=True)
-    other_titles = models.CharField(max_length=32, null=True, blank=True)
-    connect = models.TextField(null=True, blank=True)
+    beauty_title = models.CharField(max_length=32, default='пер. ', verbose_name='Наименование препятствия')
+    title = models.CharField(max_length=32, verbose_name='Наименование места')
+    other_titles = models.CharField(max_length=32, null=True, blank=True, verbose_name='Другие наименования')
+    connect = models.TextField(null=True, blank=True, verbose_name='Связь')
     add_time = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey('User', on_delete=models.CASCADE, related_name='user')
     coord = models.OneToOneField('Coord', on_delete=models.CASCADE)
@@ -29,11 +29,14 @@ class Pereval(models.Model):
 
 
 class User(models.Model):
-    email = models.EmailField()
-    fam = models.CharField(max_length=32)
-    name = models.CharField(max_length=32)
-    otc = models.CharField(max_length=32, null=True, blank=True)
-    phone = models.CharField(max_length=32)
+    email = models.EmailField(verbose_name='Почта')
+    fam = models.CharField(max_length=32, verbose_name='Фамилия')
+    name = models.CharField(max_length=32, verbose_name='Имя')
+    otc = models.CharField(max_length=32, null=True, blank=True, verbose_name='Отчество')
+    phone = models.CharField(max_length=32, verbose_name='Телефон')
+
+    def __str__(self):
+        return f'{self.fam} {self.name}'
 
 
 class Coord(models.Model):
@@ -64,10 +67,10 @@ class Level(models.Model):
 
 
 class Image(models.Model):
-    data = models.ImageField(upload_to=get_media_upload_path)
-    title = models.CharField(max_length=64)
+    data = models.ImageField(upload_to=get_media_upload_path, null=True, blank=True)
+    title = models.CharField(max_length=64, null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
-    pereval_id = models.ForeignKey(Pereval, on_delete=models.CASCADE, related_name='images')
+    pereval_id = models.ForeignKey(Pereval, on_delete=models.CASCADE, related_name='images', verbose_name='Изображения')
 
     def __str__(self):
         return f'{self.pk} {self.title}'
