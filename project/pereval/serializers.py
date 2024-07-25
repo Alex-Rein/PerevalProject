@@ -17,11 +17,11 @@ class LevelSerializer(serializers.ModelSerializer):
 
 
 class ImageSerializer(serializers.ModelSerializer):
-    image = serializers.URLField(required=False)
+    data = serializers.URLField(required=False)
 
     class Meta:
         model = Image
-        fields = '__all__'
+        fields = ('data', 'title')
 
 
 class UserSerializer(serializers.ModelSerializer):
