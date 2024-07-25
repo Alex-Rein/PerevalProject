@@ -28,7 +28,6 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = '__all__'
-        # fields = ['email', 'fam', 'name', 'otc', 'phone']
 
     def save(self, **kwargs):
         if self.is_valid():
@@ -59,22 +58,3 @@ class PerevalSerializer(WritableNestedModelSerializer):
         fields = ('add_time', 'beauty_title', 'title', 'other_titles',
                   'connect', 'user', 'coord', 'level', 'images', 'id', )
         read_only_fields = ('status', )
-
-    def validate(self, data):
-        if self.instance:
-            user = self.instance.user
-            data_user = data.get('user')
-            validating_user_fields = (
-                user.email != data_user['email'],
-                user.fam != data_user['fam'],
-                user.name != data_user['name'],
-                user.otc != data_user['otc'],
-                user.phone != data_user['phone'],
-            )
-            if data_user and any(validating_user_fields):
-                raise serializers.ValidationError('Отклонено: данные пользователя нельзя изменять')
-            elif self.instance.status != data.get('status'):
-                raise serializers.ValidationError('Отклонено: поле статуса нельзя изменять')
-            elif self.instance.add_time != data.get('add_time'):
-                raise serializers.ValidationError('Отклонено: поле времени добавления нельзя изменять')
-        return data
