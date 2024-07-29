@@ -56,5 +56,5 @@ class PerevalSerializer(WritableNestedModelSerializer):
     class Meta:
         model = Pereval
         fields = ('add_time', 'beauty_title', 'title', 'other_titles',
-                  'connect', 'user', 'coord', 'level', 'images', 'id', )
+                  'connect', 'user', 'coord', 'level', 'images', 'id', 'status')
         read_only_fields = ('status', )

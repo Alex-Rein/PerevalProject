@@ -1,3 +1,4 @@
+from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import viewsets, status
 
@@ -60,10 +61,25 @@ class PerevalViewSet(viewsets.ModelViewSet):
             })
 
     def list(self, request, *args, **kwargs):
-        pass
+        queryset = Pereval.objects.all()
+        print('=============')
+        print(self.request.query_params.get('email'))
+        print('=============')
+        email = self.request.query_params.get('email')
+        if email is not None:
+            queryset = queryset.filter(user__email=email)
+            print('=============')
+            print(queryset)
+            print('=============')
+            serializer = PerevalSerializer(queryset, many=True)
+            return Response(serializer.data)
+        else:
+            super().list(request, *args, **kwargs)
 
-    def retrieve(self, request, *args, **kwargs):
-        pass
+    # def retrieve(self, request, pk=None, **kwargs):  # Получилось то же что и родительский метод
+    #     pereval = get_object_or_404(self.queryset, pk=pk)
+    #     serializer = PerevalSerializer(pereval)
+    #     return Response(serializer.data)
 
     def partial_update(self, request, *args, **kwargs):
         pass

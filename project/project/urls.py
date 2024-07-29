@@ -23,6 +23,8 @@ from pereval.views import PerevalViewSet
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'submitData', PerevalViewSet)
+# router.register(r'submitData', PerevalViewSet, basename='POST sudmitData')
+# router.register(r'submitData/<int:id>', PerevalViewSet, basename='GET details')
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
