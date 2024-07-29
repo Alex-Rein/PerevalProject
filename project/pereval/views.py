@@ -28,7 +28,7 @@ class UserViewSet(viewsets.ModelViewSet):
 class PerevalViewSet(viewsets.ModelViewSet):
     queryset = Pereval.objects.all()
     serializer_class = PerevalSerializer
-    http_method_names = ['get', 'post']
+    http_method_names = ['get', 'post', 'patch', 'list']
 
     def create(self, request, *args, **kwargs):
         serializer = PerevalSerializer(data=request.data)
@@ -58,4 +58,13 @@ class PerevalViewSet(viewsets.ModelViewSet):
                 'message': 'Ошибка подключения к базе данных',
                 'id': None,
             })
+
+    def list(self, request, *args, **kwargs):
+        pass
+
+    def retrieve(self, request, *args, **kwargs):
+        pass
+
+    def partial_update(self, request, *args, **kwargs):
+        pass
 
