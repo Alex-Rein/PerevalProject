@@ -1,6 +1,7 @@
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import viewsets, status
+from django_filters.rest_framework import DjangoFilterBackend
 
 from .serializers import CoordSerializer, LevelSerializer, ImageSerializer, PerevalSerializer, UserSerializer
 from .models import Coord, Level, Image, Pereval, User
@@ -29,7 +30,10 @@ class UserViewSet(viewsets.ModelViewSet):
 class PerevalViewSet(viewsets.ModelViewSet):
     queryset = Pereval.objects.all()
     serializer_class = PerevalSerializer
-    http_method_names = ['get', 'post', 'patch', 'list']
+    http_method_names = ['get', 'post', 'patch']
+    # http_method_names = ['get', 'post', 'patch', 'list']
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['user__email']
 
     def create(self, request, *args, **kwargs):
         serializer = PerevalSerializer(data=request.data)
@@ -60,21 +64,19 @@ class PerevalViewSet(viewsets.ModelViewSet):
                 'id': None,
             })
 
-    def list(self, request, *args, **kwargs):
-        queryset = Pereval.objects.all()
-        print('=============')
-        print(self.request.query_params.get('email'))
-        print('=============')
-        email = self.request.query_params.get('email')
-        if email is not None:
-            queryset = queryset.filter(user__email=email)
-            print('=============')
-            print(queryset)
-            print('=============')
-            serializer = PerevalSerializer(queryset, many=True)
-            return Response(serializer.data)
-        else:
-            super().list(request, *args, **kwargs)
+    # def list(self, request, *args, **kwargs):  # Переделал на фильтрсет
+    #     queryset = Pereval.objects.all()
+    #     print('=============')
+    #     print(self.request.query_params.get('user__email'))
+    #     print('=============')
+    #     email = self.request.query_params.get('user__email')
+    #     if email is not None:
+    #         queryset = queryset.filter(user__email=email)
+    #         print('=============')
+    #         print(queryset)
+    #         print('=============')
+    #         serializer = PerevalSerializer(queryset, many=True)
+    #     return Response(serializer.data)
 
     # def retrieve(self, request, pk=None, **kwargs):  # Получилось то же что и родительский метод
     #     pereval = get_object_or_404(self.queryset, pk=pk)
