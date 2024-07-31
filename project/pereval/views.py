@@ -1,4 +1,3 @@
-from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 from rest_framework import viewsets, status
 from django_filters.rest_framework import DjangoFilterBackend
@@ -36,7 +35,7 @@ class PerevalViewSet(viewsets.ModelViewSet):
     filterset_fields = ['user__email']
 
     def create(self, request, *args, **kwargs):
-        serializer = PerevalSerializer(data=request.data)
+        serializer = self.get_serializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save()
@@ -84,5 +83,22 @@ class PerevalViewSet(viewsets.ModelViewSet):
     #     return Response(serializer.data)
 
     def partial_update(self, request, *args, **kwargs):
-        pass
-
+        instance = self.get_object()
+        if instance.status != 'new':
+            return Response({
+                'state': '0',
+                'message': f'Отклонено: изменение доступно только для новых немодерированных объектов.'
+                           f'Статус вашего объекта - {instance.get_status_display()}'
+            })
+        serializer = PerevalSerializer(instance, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({
+                'state': '1',
+                'message': f'Изменения применены успешно'
+            })
+        else:
+            return Response({
+                'state': '0',
+                'message': f'{serializer.errors["non_field_errors"][0]}'
+            })

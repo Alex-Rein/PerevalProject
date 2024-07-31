@@ -48,6 +48,7 @@ class UserSerializer(serializers.ModelSerializer):
 
 class PerevalSerializer(WritableNestedModelSerializer):
     add_time = serializers.DateTimeField(format='%d %m %Y  %H:%M:%S', read_only=True)
+    # add_time = serializers.DateTimeField(format='YYYY-MM-DDThh:mm[:ss[.uuuuuu]]')
     user = UserSerializer()
     coord = CoordSerializer()
     level = LevelSerializer(allow_null=True)
@@ -57,4 +58,28 @@ class PerevalSerializer(WritableNestedModelSerializer):
         model = Pereval
         fields = ('add_time', 'beauty_title', 'title', 'other_titles',
                   'connect', 'user', 'coord', 'level', 'images', 'id', 'status')
-        read_only_fields = ('status', )
+        read_only_fields = ('status', 'add_time')
+
+    def validate(self, data):
+        # print('=============')
+        # print(self.initial_data['status'])
+        # print(self.initial_data['user'])
+        # print('-------------')
+        # print(data['user'])
+        # print(self.instance.status)
+        # print('=============')
+        if self.instance:
+            user = self.instance.user
+            data_user = data['user']
+            validation_fields = [
+                user.name == data_user['name'],
+                user.fam == data_user['fam'],
+                user.otc == data_user['otc'],
+                user.email == data_user['email'],
+                user.phone == data_user['phone'],
+            ]
+            if not all(validation_fields):
+                raise serializers.ValidationError('Отклонено: данные пользователя нельзя изменять')
+            # elif self.instance.status != self.initial_data['status']:  # для практики
+            #     raise serializers.ValidationError('Отклонено: поле статуса нельзя изменять')
+        return data
