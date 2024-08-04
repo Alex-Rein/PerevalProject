@@ -17,12 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from pereval.views import PerevalViewSet
+from pereval.views import PerevalViewSet, UserViewSet
 
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'submitData', PerevalViewSet)
+router.register(r'users', UserViewSet)
 # router.register(r'submitData', PerevalViewSet, basename='POST sudmitData')
 # router.register(r'submitData/<int:id>', PerevalViewSet, basename='GET details')
 

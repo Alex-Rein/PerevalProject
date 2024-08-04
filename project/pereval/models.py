@@ -32,7 +32,7 @@ class Pereval(models.Model):
 
 
 class User(models.Model):
-    email = models.EmailField(verbose_name='Почта')
+    email = models.EmailField(max_length=150, verbose_name='Почта')
     fam = models.CharField(max_length=32, verbose_name='Фамилия')
     name = models.CharField(max_length=32, verbose_name='Имя')
     otc = models.CharField(max_length=32, null=True, blank=True, verbose_name='Отчество')
