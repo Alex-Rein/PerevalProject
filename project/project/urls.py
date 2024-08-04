@@ -24,6 +24,11 @@ from pereval.views import PerevalViewSet, UserViewSet
 router = routers.DefaultRouter()
 router.register(r'submitData', PerevalViewSet)
 router.register(r'users', UserViewSet)
+<<<<<<< HEAD
+=======
+# router.register(r'submitData', PerevalViewSet, basename='POST sudmitData')
+# router.register(r'submitData/<int:id>', PerevalViewSet, basename='GET details')
+>>>>>>> 4c3b267794809fb5f1f23172c401e39897af0666
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
