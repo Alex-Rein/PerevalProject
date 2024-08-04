@@ -30,7 +30,6 @@ class PerevalViewSet(viewsets.ModelViewSet):
     queryset = Pereval.objects.all()
     serializer_class = PerevalSerializer
     http_method_names = ['get', 'post', 'patch']
-    # http_method_names = ['get', 'post', 'patch', 'list']
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['user__email']
 
@@ -39,10 +38,6 @@ class PerevalViewSet(viewsets.ModelViewSet):
 
         if serializer.is_valid():
             serializer.save()
-
-            print('=============')
-            print(serializer.data)
-            print('=============')
             return Response({
                 'status': status.HTTP_200_OK,
                 'message': None,
@@ -100,6 +95,5 @@ class PerevalViewSet(viewsets.ModelViewSet):
         else:
             return Response({
                 'state': '0',
-                'message': serializer.errors
-                # 'message': f'{serializer.errors["non_field_errors"][0]}'
+                'message': f'{serializer.errors["non_field_errors"][0]}'
             })

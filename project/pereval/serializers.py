@@ -58,35 +58,8 @@ class PerevalSerializer(WritableNestedModelSerializer):
         model = Pereval
         fields = ('add_time', 'beauty_title', 'title', 'other_titles',
                   'connect', 'user', 'coord', 'level', 'images', 'id', 'status')
-        # read_only_fields = ('status', 'add_time')
-
-    # def create(self, validated_data, **kwargs):
-    #     user = validated_data.pop('user')
-    #     coord = validated_data.pop('coord')
-    #     level = validated_data.pop('level')
-    #     images = validated_data.pop('images')
-    #
-    #     user, created = User.objects.get_or_create(**user)
-    #
-    #     coord = Coord.objects.create(**coord)
-    #     level = Level.objects.create(**level)
-    #     pereval = Pereval.objects.create(**validated_data, user=user, coord=coord, level=level, status='new')
-    #
-    #     for image in images:
-    #         data = image.pop('data')
-    #         title = image.pop('title')
-    #         Image.objects.create(data=data, pereval=pereval, title=title)
-    #
-    #     return pereval
 
     def validate(self, data):
-        # print('=============')
-        # print(self.initial_data['status'])
-        # print(self.initial_data['user'])
-        # print('-------------')
-        # print(data['user'])
-        # print(self.instance.status)
-        # print('=============')
         if self.instance:
             user = self.instance.user
             data_user = data['user']
