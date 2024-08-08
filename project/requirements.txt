@@ -1,5 +1,6 @@
 Django==4.2.14
 djangorestframework==3.15.2
+drf_spectacular==0.27.2
 drf_writable_nested==0.7.0
 python-dotenv==1.0.1
 django-filter==24.2
