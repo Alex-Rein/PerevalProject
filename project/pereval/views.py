@@ -96,5 +96,4 @@ class PerevalViewSet(viewsets.ModelViewSet):
             return Response({
                 'state': '0',
                 'message': serializer.errors
-                # 'message': f'{serializer.errors["non_field_errors"][0]}'
             })

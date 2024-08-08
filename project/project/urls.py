@@ -18,21 +18,19 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from pereval.views import PerevalViewSet, UserViewSet
+from drf_spectacular.views import SpectacularSwaggerView, SpectacularAPIView
 
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
-router.register(r'submitData', PerevalViewSet)
+router.register(r'submitData', PerevalViewSet, basename='pereval')
 router.register(r'users', UserViewSet)
-<<<<<<< HEAD
-=======
-# router.register(r'submitData', PerevalViewSet, basename='POST sudmitData')
-# router.register(r'submitData/<int:id>', PerevalViewSet, basename='GET details')
->>>>>>> 4c3b267794809fb5f1f23172c401e39897af0666
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
+    path('api/schema', SpectacularAPIView.as_view(), name='schema'),
+    path('api/schema/swagger-ui', SpectacularSwaggerView.as_view(), name='swagger-ui')
 ]

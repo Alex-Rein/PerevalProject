@@ -1,0 +1,521 @@
+openapi: 3.0.3
+info:
+  title: PerevalProject
+  version: 1.0.0
+  description: Pereval online API
+paths:
+  /submitData/:
+    get:
+      operationId: submitData_list
+      parameters:
+      - in: query
+        name: user__email
+        schema:
+          type: string
+      tags:
+      - submitData
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Pereval'
+          description: ''
+    post:
+      operationId: submitData_create
+      tags:
+      - submitData
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pereval'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Pereval'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Pereval'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pereval'
+          description: ''
+  /submitData/{id}/:
+    get:
+      operationId: submitData_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this pereval.
+        required: true
+      tags:
+      - submitData
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pereval'
+          description: ''
+    patch:
+      operationId: submitData_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this pereval.
+        required: true
+      tags:
+      - submitData
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedPereval'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedPereval'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedPereval'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pereval'
+          description: ''
+  /users/:
+    get:
+      operationId: users_list
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+          description: ''
+    post:
+      operationId: users_create
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /users/{id}/:
+    get:
+      operationId: users_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    put:
+      operationId: users_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    patch:
+      operationId: users_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    delete:
+      operationId: users_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - users
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    BlankEnum:
+      enum:
+      - ''
+    Coord:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        latitude:
+          type: number
+          format: double
+          title: Широта
+        longitude:
+          type: number
+          format: double
+          title: Долгота
+        height:
+          type: integer
+          maximum: 2147483647
+          minimum: -2147483648
+          title: Высота
+      required:
+      - height
+      - id
+      - latitude
+      - longitude
+    Image:
+      type: object
+      properties:
+        data:
+          type: string
+          format: uri
+        title:
+          type: string
+          nullable: true
+          maxLength: 64
+    Level:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        winter:
+          nullable: true
+          title: Зима
+          oneOf:
+          - $ref: '#/components/schemas/LevelEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        summer:
+          nullable: true
+          title: Лето
+          oneOf:
+          - $ref: '#/components/schemas/LevelEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        autumn:
+          nullable: true
+          title: Осень
+          oneOf:
+          - $ref: '#/components/schemas/LevelEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+        spring:
+          nullable: true
+          title: Весна
+          oneOf:
+          - $ref: '#/components/schemas/LevelEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+          - $ref: '#/components/schemas/NullEnum'
+      required:
+      - id
+    LevelEnum:
+      enum:
+      - 1a
+      - 2a
+      - 3a
+      - 1b
+      - 2b
+      - 3b
+      type: string
+      description: |-
+        * `1a` - 1-А
+        * `2a` - 2-А
+        * `3a` - 3-А
+        * `1b` - 1-Б
+        * `2b` - 2-Б
+        * `3b` - 3-Б
+    NullEnum:
+      enum:
+      - null
+    PatchedPereval:
+      type: object
+      description: Adds nested create feature
+      properties:
+        add_time:
+          type: string
+          format: date-time
+          readOnly: true
+        beauty_title:
+          type: string
+          title: Наименование препятствия
+          maxLength: 32
+        title:
+          type: string
+          title: Наименование места
+          maxLength: 32
+        other_titles:
+          type: string
+          nullable: true
+          title: Другие наименования
+          maxLength: 32
+        connect:
+          type: string
+          nullable: true
+          title: Связь
+        user:
+          $ref: '#/components/schemas/User'
+        coord:
+          $ref: '#/components/schemas/Coord'
+        level:
+          allOf:
+          - $ref: '#/components/schemas/Level'
+          nullable: true
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/Image'
+        id:
+          type: integer
+          readOnly: true
+        status:
+          type: string
+    PatchedUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          title: Почта
+          maxLength: 150
+        fam:
+          type: string
+          title: Фамилия
+          maxLength: 32
+        name:
+          type: string
+          title: Имя
+          maxLength: 32
+        otc:
+          type: string
+          nullable: true
+          title: Отчество
+          maxLength: 32
+        phone:
+          type: string
+          title: Телефон
+          maxLength: 32
+    Pereval:
+      type: object
+      description: Adds nested create feature
+      properties:
+        add_time:
+          type: string
+          format: date-time
+          readOnly: true
+        beauty_title:
+          type: string
+          title: Наименование препятствия
+          maxLength: 32
+        title:
+          type: string
+          title: Наименование места
+          maxLength: 32
+        other_titles:
+          type: string
+          nullable: true
+          title: Другие наименования
+          maxLength: 32
+        connect:
+          type: string
+          nullable: true
+          title: Связь
+        user:
+          $ref: '#/components/schemas/User'
+        coord:
+          $ref: '#/components/schemas/Coord'
+        level:
+          allOf:
+          - $ref: '#/components/schemas/Level'
+          nullable: true
+        images:
+          type: array
+          items:
+            $ref: '#/components/schemas/Image'
+        id:
+          type: integer
+          readOnly: true
+        status:
+          type: string
+      required:
+      - add_time
+      - coord
+      - id
+      - level
+      - status
+      - title
+      - user
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          title: Почта
+          maxLength: 150
+        fam:
+          type: string
+          title: Фамилия
+          maxLength: 32
+        name:
+          type: string
+          title: Имя
+          maxLength: 32
+        otc:
+          type: string
+          nullable: true
+          title: Отчество
+          maxLength: 32
+        phone:
+          type: string
+          title: Телефон
+          maxLength: 32
+      required:
+      - email
+      - fam
+      - id
+      - name
+      - phone
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
